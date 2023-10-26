@@ -1,0 +1,12 @@
+.header-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    margin-right: 4rem;
+}
+
+.header-logo {
+    margin-left: 2rem;
+}
