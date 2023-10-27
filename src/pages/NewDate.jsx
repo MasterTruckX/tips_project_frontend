@@ -6,6 +6,7 @@ import {FaRegCalendarPlus} from 'react-icons/fa'
 import { createDate, reset } from '../features/date/dateSlice'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../components/Spinner'
+// import WaiterForm from '../components/WaiterForm'
 
 const NewDate = () => {
   const [formData, setFormData] = useState({
@@ -42,8 +43,7 @@ const NewDate = () => {
         const dateData = {
           date, role, hours, shift
         }
-        dispatch(createDate(dateData))
-        dateId = 
+        dispatch(createDate(dateData)) 
         setFormData(
           {
             date: '',
@@ -52,6 +52,7 @@ const NewDate = () => {
             shift: ''
           }
         )
+        navigate('/newWaiter')
       }
   }
 
@@ -128,6 +129,7 @@ const NewDate = () => {
             </form>
         </section>
       </div>
+      {/* <WaiterForm dateId = {dates.id}/> */}
     </>
   )
 }

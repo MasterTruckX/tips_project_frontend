@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import NewDate from './pages/NewDate'
+import NewWaiter from './pages/NewWaiter'
 import Register from './pages/Register'
 
 function App() {  
@@ -17,6 +18,7 @@ function App() {
             <Route path='/login' element= {<Login/>}/>
             <Route path='/register' element= {<Register/>}/>
             <Route path='/newDate' element= {<NewDate/>}/>
+            <Route path='/newWaiter' element= {<NewWaiter/>}/>
           </Routes>
         </div>
       </Router>
