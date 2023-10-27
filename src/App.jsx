@@ -9,12 +9,12 @@ function App() {
   return (
     <>
       <Router>
-        <div className='container'>
-          <Header/>
+        <Header/>
+        <div>
           <Routes>
             <Route path='/' element= {<Dashboard/>}/>
-            <Route path='/' element= {<Login/>}/>
-            <Route path='/' element= {<Register/>}/>
+            <Route path='/login' element= {<Login/>}/>
+            <Route path='/register' element= {<Register/>}/>
           </Routes>
         </div>
       </Router>
