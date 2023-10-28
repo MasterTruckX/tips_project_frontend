@@ -14,8 +14,19 @@ const createWaiter = async(waiterData, token) => {
     return response.data
 }
 
+const getAllWaiters = async(dateId, token) => {
+    const config = { 
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + dateId, config)
+    return response.data
+}
+
 const waitersService = {
-    createWaiter
+    createWaiter,
+    getAllWaiters
 }
 
 export default waitersService

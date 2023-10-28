@@ -3,6 +3,7 @@ import { useSelector,useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import { getDateById, getAllDates, reset } from '../features/date/dateSlice'
+import { getAllWaiters, reset as resetWaiters } from '../features/waiters/waitersSlice'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../components/Spinner'
 import DateObj from '../components/DateObj'
@@ -25,7 +26,8 @@ const CheckDate = () => {
         navigate('/login')
       }
       dispatch(getAllDates())
-      dispatch(reset())    
+      dispatch(reset())
+
       
     },[user, isError,message, dispatch, date])
     
@@ -46,7 +48,7 @@ const CheckDate = () => {
     })
     if(dateData.length===0 || date === ''){
       toast.error('Choose a registered Date.')
-    }
+    }    
   }
 
   const checkDateReset = (e) => {
