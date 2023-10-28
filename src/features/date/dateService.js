@@ -15,8 +15,33 @@ const createDate = async(dateData,token) => {
     return response.data
 }
 
+// get all date
+const getAllDates = async(token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL, config)
+    return response.data
+}
+
+// get date by Id
+const getDateById = async(id,token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'date/' + id, config)
+    return response.data
+}
+
+
 const dateService = {
-    createDate
+    createDate,
+    getAllDates,
+    getDateById
 }
 
 export default dateService

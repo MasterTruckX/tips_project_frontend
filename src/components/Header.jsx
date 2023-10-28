@@ -19,7 +19,7 @@ const Header = () => {
       <nav className="navbar navbar-expand-lg bg-light" data-bs-theme="light">
         <div className="container-fluid">
             <div className='header-logo'>
-              <Link className="navbar-brand" to={'/'}>Tips</Link>
+              <p className="navbar-brand">Tips</p>
             </div>
             <div className='header-container'>
               <div className="collapse navbar-collapse" id="navbarColor03">
@@ -27,22 +27,20 @@ const Header = () => {
                 {user? (
                 <>
                   <li className="nav-item">
-                  <Link className="nav-link active" to={"#"}>Home
-                      <span className="visually-hidden">(current)</span>
-                  </Link>
+                  <Link className="nav-link active" to={"#"}>Home</Link>
                   </li>
                   <li className="nav-item">
                   <Link className="nav-link" to={"/newDate"}>New Date</Link>
                   </li>
                   <li className="nav-item">
-                  <Link className="nav-link" to={"#"}>Update Date</Link>
+                  <Link className="nav-link" to={"/updateDate"}>Update Date</Link>
                   </li>
                   <li className="nav-item">
-                  <Link className="nav-link" to={"#"}>Check Date</Link>
+                  <Link className="nav-link" to={"/checkDate"}>Check Date</Link>
                   </li>
                   <li className="nav-item">
                     <button className='nav-link' onClick={onLogout}>
-                      <FaSignOutAlt /> Logout
+                      <FaSignOutAlt />Logout
                     </button>
                   </li>
                 </>

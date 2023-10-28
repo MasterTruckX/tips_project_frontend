@@ -16,6 +16,7 @@ const NewWaiter = () => {
   
     const { name, checkTip, paidTip, id } = formData
     const { waiters, isLoading, isError, isSuccess, message} = useSelector((state) => state.waiter)
+    const { user } = useSelector((state) => state.auth)
     const { dates } = useSelector((state) => state.date)
     // const dates = {id: 15}
     const dispatch = useDispatch()
@@ -24,9 +25,12 @@ const NewWaiter = () => {
       if(isError) {
         toast.error(message)
       }
+      if (!user) {
+        navigate('/login')
+      }
       dispatch(reset())    
       
-    },[isSuccess,isError,message, dispatch])
+    },[user,navigate,isSuccess,isError,message, dispatch])
     const onChange = (e) => {
       setFormData((prevState) => ({
           ...prevState,
@@ -101,15 +105,6 @@ const NewWaiter = () => {
                 <option value="Nicole">Nicole</option>
                 <option value="Tatiana">Tatiana</option>
             </select>
-            {/* <input 
-                type="text"
-                className='form-control'
-                id='name'
-                name='name'
-                value={name}
-                placeholder='Enter the name of the waiter'
-                onChange= {onChange}
-            /> */}
             </div>
             <div className="form-group">
             <label htmlFor="checkTip">Tip from check:</label>
