@@ -27,7 +27,7 @@ const CheckDate = () => {
       dispatch(getAllDates())
       dispatch(reset())    
       
-    },[user, isError,message, dispatch])
+    },[user, isError,message, dispatch, date])
     
   const onChange = (e) => {
       setFormData((prevState) => ({
@@ -36,29 +36,27 @@ const CheckDate = () => {
       }))
     }
   let dateData = []
-  // datesList.forEach(d => {if(d.date==date){
-  //   dateData.push(d.id)
-  // }})
-  // console.log(dateData)
-  // for(let i = 0; i<=datesList.length; i++){
-    //   if(datesList[i].date===date){
-      //     dateData.push(datesList[i].id)
-      //   }
-      // }
   const onSubmit = (e) => {
     e.preventDefault()
     datesList.forEach(d => {
       if((new Date(d.date)).toLocaleDateString('en-US', {timeZone: 'UTC'})===(new Date(date)).toLocaleDateString('en-US', {timeZone: 'UTC'})){
         dateData.push(d.id)
+        dispatch(getDateById(+dateData[0]))
       }
     })
-    dispatch(getDateById(+dateData[0]))
-      // if (datesList===[]) {
-      //   toast.error('Select a date.')
-      // } else {
-          
-      // }
+    if(dateData.length===0 || date === ''){
+      toast.error('Choose a registered Date.')
+    }
   }
+
+  const checkDateReset = (e) => {
+    e.preventDefault()
+    setFormData({
+      date: ''
+    })
+    dispatch(reset())
+  }
+
   return (
     <>
       <div className="form-container">
@@ -85,17 +83,19 @@ const CheckDate = () => {
                             />
                         </div>
                         <div className="form-group">
-                          <button type="submit" className='btn btn-primary'>Submit</button>
+                          <button type="submit" className='btn btn-primary'>Check Date</button>
                         </div>
                     </form>
                 </section>
             </>
         ) : (
             <>
-                <section>
-                    <h3>Date: {(new Date(date)).toLocaleDateString('en-US', {timeZone: 'UTC'})}</h3>
-                </section>
-                <DateObj currentDate={dates}/>
+              <DateObj currentDate={dates}/>
+              <form onSubmit={checkDateReset}>
+                <div className="form-group">
+                  <button type="submit" className='btn btn-primary'>Go Back</button>
+                </div>
+              </form>
             </>
         )}
       </div>
