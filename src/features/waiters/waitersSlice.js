@@ -56,7 +56,7 @@ export const waitersSlice = createSlice({
             .addCase(getAllWaiters.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.waiters.push(action.payload)
+                state.waiters = action.payload
             })
             .addCase(getAllWaiters.rejected, (state, action) => {
                 state.isLoading = false
