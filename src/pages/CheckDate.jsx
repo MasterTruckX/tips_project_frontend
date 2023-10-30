@@ -57,6 +57,9 @@ const CheckDate = () => {
     })
     dispatch(reset())
   }
+  if (isLoading) {
+    return <Spinner />
+  }
 
   return (
     <>

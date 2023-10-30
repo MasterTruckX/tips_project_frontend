@@ -37,11 +37,28 @@ const getDateById = async(id,token) => {
     return response.data
 }
 
+// update date
+const updateDate = async(id,dateData) => {
+    const response = await axios.put(API_URL + id,dateData)
+    return response.data
+}
+
+const deleteDate = async(id,token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.delete(API_URL + id, config)
+    return response.data
+}
 
 const dateService = {
     createDate,
     getAllDates,
-    getDateById
+    getDateById,
+    updateDate,
+    deleteDate
 }
 
 export default dateService

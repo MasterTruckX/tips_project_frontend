@@ -42,6 +42,25 @@ export const getDateById = createAsyncThunk('date/getById', async(id,thunkAPI) =
     }
 })
 
+export const updateDate = createAsyncThunk('date/update', async(id,dateData) => {
+    try{
+        return await dateService.updateDate(id,dateData)
+    }catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+export const deleteDate = createAsyncThunk('date/delete', async(id,thunkAPI) => {
+    try{
+        const token = thunkAPI.getState().auth.user.token
+        return await dateService.deleteDate(id,token)
+    }catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 export const dateSlice = createSlice({
     name: 'date',
     initialState,
@@ -56,7 +75,6 @@ export const dateSlice = createSlice({
             .addCase(createDate.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                // state.dates.push(action.payload)
                 state.dates = action.payload
             })
             .addCase(createDate.rejected, (state, action) => {
@@ -86,6 +104,32 @@ export const dateSlice = createSlice({
                 state.dates = action.payload
             })
             .addCase(getDateById.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(updateDate.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(updateDate.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.dates = action.payload
+            })
+            .addCase(updateDate.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(deleteDate.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(deleteDate.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.datesList = state.datesList.filter((date) => date.id !== action.payload.id)
+            })
+            .addCase(deleteDate.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

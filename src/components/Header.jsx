@@ -16,7 +16,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+      <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="light">
         <div className="container-fluid">
             <div className='header-logo'>
               <p className="navbar-brand">Tips</p>

@@ -17,3 +17,13 @@
     margin-right: 25rem;
 }
 
+/* .form-dates {
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+.btn-delete {
+    /* position: relative; */
+    float: inline-end;
+    margin-top: 1rem;
+}
