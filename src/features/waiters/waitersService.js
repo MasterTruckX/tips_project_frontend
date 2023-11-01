@@ -24,9 +24,20 @@ const getAllWaiters = async(dateId, token) => {
     return response.data
 }
 
+const deleteWaiters = async(waiterId, token) => {
+    const config = { 
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.delete(API_URL + waiterId, config)
+    return response.data
+}
+
 const waitersService = {
     createWaiter,
-    getAllWaiters
+    getAllWaiters,
+    deleteWaiters
 }
 
 export default waitersService

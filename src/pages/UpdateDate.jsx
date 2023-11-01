@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { FaRegEdit } from 'react-icons/fa'
+import { getAllWaiters, reset as waiterReset} from '../features/waiters/waitersSlice'
 import {createDate, getDateById,getAllDates, deleteDate, reset } from '../features/date/dateSlice'
 import { logout, reset as userReset } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../components/Spinner'
+import WaiterUpdate from '../components/WaiterUpdate'
 
 const UpdateDate = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +15,7 @@ const UpdateDate = () => {
     role: '',
     hours: 0,
     shift: '',
-    btnradio: 'date'
+    btnradio: ''
   })
   const { date,role, hours, shift, btnradio } = formData
   const { user } = useSelector((state) => state.auth)
@@ -30,7 +32,6 @@ const UpdateDate = () => {
       navigate('/login')
     }
     dispatch(getAllDates())
-    // dispatch(reset())
     if(date===''&&dates!==null){
       dispatch(reset())
     }    
@@ -51,6 +52,9 @@ const UpdateDate = () => {
         dispatch(getDateById(+dateData[0]))
       }
     })
+    if(btnradio==='waiter'){
+      dispatch(getAllWaiters(+dateData[0]))
+    }
     if(dateData.length===0 || date === ''){
       toast.error('Choose a registered Date.')
     }
@@ -91,8 +95,12 @@ const UpdateDate = () => {
       {
         date: ''
       }
-    )
-    toast.warn('deleting')
+      )
+    if(dateData.length!==0){
+      toast.warn(`Deleting date ${(new Date(dates.date)).toLocaleDateString('en-US', {timeZone: 'UTC'})}`)
+    }else {
+      toast.error('Choose a registered Date.')
+    }
   }
 
   if (isLoading) {
@@ -108,14 +116,14 @@ const UpdateDate = () => {
           <p>Please fill the following fields.</p>
         </section>
         <section>
-          <div>
+          <form onSubmit={(e) => {e.preventDefault()}}>
             <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-              <input type="radio" className="btn-check" name="btnradio" id="btnradio1" value={'date'} onChange={onChange} autoComplete="off" defaultChecked />
+              <input type="radio" className="btn-check" name="btnradio" id="btnradio1" value={'date'} onChange={onChange} autoComplete="off"/>
               <label className="btn btn-outline-primary" htmlFor="btnradio1">Update Date</label>
               <input type="radio" className="btn-check" name="btnradio" id="btnradio2" value={'waiter'} onChange={onChange} autoComplete="off"/>
               <label className="btn btn-outline-primary" htmlFor="btnradio2">Update Waiter</label>
             </div>
-          </div>
+          </form>
         </section>
         <section className='form-dates'>
             <form onSubmit={onSubmitDate}>
@@ -134,18 +142,6 @@ const UpdateDate = () => {
                   <button type="submit" className='btn btn-primary'>Check</button>
                 </div>
             </form>
-            {date!==''? (
-              <>
-                <form className='btn-delete' onSubmit={onSubmitDelete}>
-                  <div className="form-group">
-                    <button type="submit" className='btn btn-outline-danger'>Delete Date</button>
-                  </div>
-                </form>
-              </>
-            ) : (
-              <>
-              </>
-            )}
         </section>
         <section>
           {dates&&date!==''? (
@@ -162,7 +158,7 @@ const UpdateDate = () => {
                             name='role'
                             value={role}
                             onChange={onChange}
-                          >
+                            >
                               <option value=''>Choose your role.</option>
                               <option value="Busser">Busser</option>
                               <option value="Food Runner">Food Runner</option>
@@ -178,7 +174,7 @@ const UpdateDate = () => {
                               value={hours}
                               placeholder='0.00'
                               onChange={onChange}
-                          />
+                              />
                       </div>
                       <div className="form-group">
                           <label htmlFor="shift">Shift: </label>
@@ -188,7 +184,7 @@ const UpdateDate = () => {
                             name='shift'
                             value={shift}
                             onChange={onChange}
-                          >
+                            >
                               <option value=''>Choose your shift.</option>
                               <option value="Lunch">Lunch</option>
                               <option value="Dinner">Dinner</option>
@@ -198,9 +194,24 @@ const UpdateDate = () => {
                           <button type="submit" className='btn btn-primary'>Submit</button>
                       </div>
                   </form>
+                  {date!==''&&btnradio==='date'? (
+                    <>
+                      <form className='btn-delete' onSubmit={onSubmitDelete}>
+                        <div className="form-group">
+                          <button type="submit" className='btn btn-outline-danger'>Delete Date</button>
+                        </div>
+                      </form>
+                    </>
+                  ) : (
+                    <>
+                    </>
+                  )}
                 </>
               ) : (
-                <h1>Update waiterrrrrrrrrr</h1>
+                <>
+                  <h1>Update Waiter</h1>
+                  <WaiterUpdate key={dates.id} currentDate={dates}/>
+                </>
               )}
             </>
           ) : (

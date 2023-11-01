@@ -29,6 +29,16 @@ export const  getAllWaiters = createAsyncThunk('waiters/getAll', async(dateId, t
     }
 })
 
+export const  deleteWaiters = createAsyncThunk('waiters/delete', async(waiterId, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await waitersService.deleteWaiters(waiterId,token)
+    }catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 export const waitersSlice = createSlice({
     name: 'waiter',
     initialState,
@@ -59,6 +69,19 @@ export const waitersSlice = createSlice({
                 state.waiters = action.payload
             })
             .addCase(getAllWaiters.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(deleteWaiters.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(deleteWaiters.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.waiters = state.waiters.filter((waiter) => waiter.id !== action.payload.id)
+            })
+            .addCase(deleteWaiters.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
