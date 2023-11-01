@@ -6,9 +6,10 @@ import CheckDate from './pages/CheckDate'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import NewDate from './pages/NewDate'
-import NewWaiter from './pages/NewWaiter'
+import AddWaiter from './pages/AddWaiter'
 import Register from './pages/Register'
 import UpdateDate from './pages/UpdateDate'
+import NewWaiter from './pages/NewWaiter'
 
 function App() {  
 
@@ -22,9 +23,10 @@ function App() {
             <Route path='/login' element= {<Login/>}/>
             <Route path='/register' element= {<Register/>}/>
             <Route path='/newDate' element= {<NewDate/>}/>
-            <Route path='/newWaiter' element= {<NewWaiter/>}/>
+            <Route path='/addWaiter' element= {<AddWaiter/>}/>
             <Route path='/checkDate' element= {<CheckDate/>}/>
             <Route path='/updateDate' element= {<UpdateDate/>}/>
+            <Route path='/newWaiter' element= {<NewWaiter/>}/>
           </Routes>
         </div>
       </Router>

@@ -33,6 +33,9 @@ const Header = () => {
                   <Link className="nav-link" to={"/newDate"}>New Date</Link>
                   </li>
                   <li className="nav-item">
+                  <Link className="nav-link" to={"/newWaiter"}>New Waiter</Link>
+                  </li>
+                  <li className="nav-item">
                   <Link className="nav-link" to={"/updateDate"}>Update Date</Link>
                   </li>
                   <li className="nav-item">
